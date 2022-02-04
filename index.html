@@ -4,73 +4,231 @@
     <meta charset="utf-8">
     <title>TygaX</title>
     <style>
-    {
-     margin:0;
-     padding:0;
-     box-sizing: border-box;
-    }
-    body
-    {
-     display:flex;
-     justify-content:center ;
-     align-items:center;
-     min-height:100vh;
-     background:#000;
-    }
-    .loader
-    {
-     position:relative;
-     width: 150px;
-     height: 150px;
-     border-radius: 50%;
-     background: linear-gradient(45deg,transparent,
-     transparent 40%, #e5f403);
-     animation: animate 2s linear infinite;
-    }
-    @keyframes animate
-    {
-       0%
-       { transform: rotate(0deg);
-       filter:hue-rotate(0deg);
-       }
-       100%
-       {
-        transform: rotate(360deg);
-         filter:hue-rotate(360deg);
-       }
-    }
-    }
-    .loader:before
-    {
-     content: '';
-     position: absolute;
-     top: 6px;
-     left: 6px;
-     right: 6px;
-     bottom: 6px;
-     background: #000;
-     border-radius:50%;
-     z-index: 1000;
-    }
-    .loader:after
-    {
-     content: '';
-     position:absolute;
-     top:0px;
-     left:0px;
-     right:0px;
-     bottom:0px;
-     background:linear-gradient(45deg,transparent,
-     transparent 40%, #e5f403);
-     border-radius:50%;
-     z-index: 1000;
-     z-index:1;
-     filter: blur(30px);
-    }
+    * {
+  box-sizing: border-box;
+}
+body {
+  background: #1c0136;
+  min-height: 100vh;
+}
+.scene {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  position: relative;
+  height: 100vh;
+  overflow-x: hidden;
+}
+img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-69.5%, -26%);
+  opacity: 0.2;
+  height: 1300px;
+}
+.lava-lamp {
+  height: calc(var(--height) * 1px);
+  width: calc(var(--width) * 1px);
+  position: relative;
+}
+.lava-lamp:after {
+  content: '';
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  background: radial-gradient(circle at 50% 50%, #19b5fe, transparent 60%);
+  top: 45%;
+  left: 50%;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+  opacity: 0.5;
+}
+.lava-lamp:before {
+  content: '';
+  height: 25%;
+  width: 300%;
+  border-radius: 100%;
+  background: radial-gradient(ellipse at 50% 50%, #19b5fe, transparent 60%);
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  opacity: 0.5;
+  filter: blur(10px);
+}
+.lava-lamp__main {
+  border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+.lava-lamp__main:after,
+.lava-lamp__main:before {
+  background: #000;
+  content: '';
+  height: 12%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+.lava-lamp__main:after {
+  top: 0;
+}
+.lava-lamp__main:before {
+  bottom: 0;
+  height: 26%;
+}
+.lava-lamp__glass {
+  background: radial-gradient(circle at 50% 50%, #3a539b 25%, #19b5fe);
+  border-radius: 50%/10%;
+  overflow: hidden;
+  height: 70%;
+  left: 0;
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  z-index: 2;
+}
+.lava-lamp__base {
+  height: 20%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 0 0 50% 50%/0 0 35% 35%;
+}
+.lava-lamp__base:before {
+  content: '';
+  background: #000;
+  border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+  position: absolute;
+  top: -60%;
+  height: calc(var(--height) * 1px);
+  width: calc(var(--width) * 1px);
+}
+.lava-lamp__lava {
+  border-radius: 50%/10%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  filter: url("#goo");
+}
+.lava-lamp__lava svg {
+  height: 280px;
+  width: 150px;
+}
+.blob {
+  -webkit-animation-delay: calc(var(--delay) * 1s);
+          animation-delay: calc(var(--delay) * 1s);
+  -webkit-animation-direction: var(--direction);
+          animation-direction: var(--direction);
+  -webkit-animation-duration: calc(var(--speed) * 1s);
+          animation-duration: calc(var(--speed) * 1s);
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: blob;
+          animation-name: blob;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  fill: #29f1c3;
+  transform-box: fill-box;
+}
+.blob--bottom,
+.blob--top {
+  -webkit-animation: none;
+          animation: none;
+}
+.blob--top {
+  -webkit-animation: sway 20s infinite linear;
+          animation: sway 20s infinite linear;
+}
+@-webkit-keyframes sway {
+  50% {
+    transform: translate(50%, 0);
+  }
+}
+@keyframes sway {
+  50% {
+    transform: translate(50%, 0);
+  }
+}
+@-webkit-keyframes blob {
+  from {
+    transform: skew(calc(var(--skewX) * 1deg), calc(var(--skewY) * 1deg)) translate(0, 0);
+  }
+  to {
+    transform: skew(calc(var(--skewX) * 1deg), calc(var(--skewY) * 1deg)) translate(0, calc((400 + (var(--height) * 2)) * -1px));
+  }
+}
+@keyframes blob {
+  from {
+    transform: skew(calc(var(--skewX) * 1deg), calc(var(--skewY) * 1deg)) translate(0, 0);
+  }
+  to {
+    transform: skew(calc(var(--skewX) * 1deg), calc(var(--skewY) * 1deg)) translate(0, calc((400 + (var(--height) * 2)) * -1px));
+  }
+}
 
     </style>
   </head>
   <body>
-    <div class="loader"></div>
+    <div class="scene">
+  <div class="lava-lamp" style="--height: 400; --width: 150">
+    <div class="lava-lamp__main">
+      <div class="lava-lamp__glass">
+          <div class="lava-lamp__lava">
+            <svg>
+              <ellipse class="blob blob--top" cx="35" cy="0" rx="35" ry="10"></ellipse>
+              <ellipse class="blob blob--bottom" cx="75" cy="270" rx="75" ry="10"></ellipse>
+              <circle class="blob" r="20.5" cx="49" cy="400" style="--skewX: 5; --skewY: 0; --height: 41; --speed: 16; --delay: -1; --direction: alternate;"></circle>
+              <circle class="blob" r="26" cx="21" cy="400" style="--skewX: 3; --skewY: -2; --height: 52; --speed: 23; --delay: -5; --direction: alternate-reverse;"></circle>
+              <circle class="blob" r="48.5" cx="45" cy="400" style="--skewX: 0; --skewY: -3; --height: 97; --speed: 42; --delay: -1; --direction: alternate;"></circle>
+            </svg>
+          </div>
+          <div class="lava-lamp__lava">
+            <svg>
+              <ellipse class="blob blob--top" cx="35" cy="0" rx="35" ry="10"></ellipse>
+              <ellipse class="blob blob--bottom" cx="75" cy="270" rx="75" ry="10"></ellipse>
+              <circle class="blob" r="45" cx="82" cy="400" style="--skewX: 1; --skewY: -3; --height: 90; --speed: 46; --delay: -1; --direction: alternate;"></circle>
+              <circle class="blob" r="33" cx="1" cy="400" style="--skewX: -5; --skewY: 0; --height: 66; --speed: 18; --delay: 0; --direction: alternate;"></circle>
+              <circle class="blob" r="33" cx="0" cy="400" style="--skewX: -5; --skewY: 3; --height: 66; --speed: 14; --delay: -9; --direction: alternate-reverse;"></circle>
+              <circle class="blob" r="25" cx="64" cy="400" style="--skewX: -3; --skewY: 3; --height: 50; --speed: 24; --delay: -6; --direction: alternate;"></circle>
+            </svg>
+          </div>
+          <div class="lava-lamp__lava">
+            <svg>
+              <ellipse class="blob blob--top" cx="35" cy="0" rx="35" ry="10"></ellipse>
+              <ellipse class="blob blob--bottom" cx="75" cy="270" rx="75" ry="10"></ellipse>
+              <circle class="blob" r="20" cx="33" cy="400" style="--skewX: 0; --skewY: -5; --height: 40; --speed: 25; --delay: -9; --direction: alternate-reverse;"></circle>
+              <circle class="blob" r="49" cx="16" cy="400" style="--skewX: 2; --skewY: 1; --height: 98; --speed: 50; --delay: -4; --direction: alternate;"></circle>
+            </svg>
+          </div>
+          <div class="lava-lamp__lava">
+            <svg>
+              <ellipse class="blob blob--top" cx="35" cy="0" rx="35" ry="10"></ellipse>
+              <ellipse class="blob blob--bottom" cx="75" cy="270" rx="75" ry="10"></ellipse>
+              <circle class="blob" r="33" cx="35" cy="400" style="--skewX: 3; --skewY: 2; --height: 66; --speed: 12; --delay: -1; --direction: alternate-reverse;"></circle>
+            </svg>
+          </div>
+      </div>
+    </div>
+    <div class="lava-lamp__base"></div>
+  </div>
+  <svg style="position: absolute; left: 100%">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="BLUR"></feGaussianBlur>
+        <feColorMatrix in="BLUR" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="GOO"></feColorMatrix>
+        <feBlend in="SourceGraphic" in2="goo"></feBlend>
+      </filter>
+    </defs>
+  </svg>
+</div>
   </body>
 </html>
